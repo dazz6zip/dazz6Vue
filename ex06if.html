@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex06if.html</title>
+    <style>
+      button {
+        border: none;
+      }
+    </style>
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>조건부 렌더링을 위한 v-if 연습</h2>
+    <div id="app">
+      <p v-if="season">SUMMER</p>
+      <p v-else>WINTER</p>
+      <button @click="season = !season" class="btn btn-success">/ᐠ｡ꞈ｡ᐟ\</button>
+
+      <!-- 조건, 반복 렌더링을 할 때 유용한 특수 HTML 태그 -->
+      <template v-if="season">
+        <br />
+        🎐 🥽
+      </template>
+      <template v-else>
+        <br />
+        🎄🧣
+      </template>
+
+      <br />
+      <span v-show="season"> 여름 </span><br /><br /><br />
+      <!-- template 내에서는 v-if만 사용 가능 (v-show 사용 불가) -->
+
+      <!-- v-if와 v-show의 차이 -->
+      <p v-if="season">v-if : false인 경우 코드 제거</p>
+      <p v-show="season">v-show : false인 경우 display none</p>
+      <hr />
+      <label><input type="checkbox" v-model="myVisiable" /></label>
+      <p v-if="myVisiable">CheckOn</p>
+      <p v-else>CheckOff</p>
+      <hr />
+
+      <!-- count 값에 따른 조건부 렌더링 -->
+
+      <p v-if="count === 10">{{ count }} 🍥</p>
+      <p v-else-if="count >= 1">{{ count }}</p>
+      <p v-else>CLICK</p>
+      <button v-bind:disabled="count === 10" @click="addFunc">🎐</button>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            season: true, // 계절 (true : 여름 / false : 겨울)
+            myVisiable: false, // checkBox 상태 초기화
+            count: 0,
+          };
+        },
+        methods: {
+          addFunc() {
+            this.count++;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

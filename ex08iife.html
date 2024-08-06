@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex07for.html</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      input {
+        border: 1px solid orange;
+        border-radius: 20px;
+        padding: 5px;
+        text-align: center;
+      }
+      button {
+        border: 1px solid orange;
+        width: 100px;
+        border-radius: 20px;
+        padding: 5px;
+        text-align: center;
+      }
+      select {
+        border: 1px solid orange;
+        border-radius: 20px;
+        padding: 5px;
+      }
+      table {
+        text-align: center;
+        width: 100%;
+        border: 1px solid orange;
+      }
+
+      table th {
+        text-align: center;
+        background-color: orange;
+        padding: 5px;
+        color: white;
+      }
+    </style>
+    <script src="https://unpkg.com/vue@3"></script>
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <h2>IIFE</h2>
+
+    <!-- 첫 번째 인스턴스 -->
+    <div id="app1">
+      {{key1}} {{key2}}
+      <br />
+      <br />
+      <b>{{message}}</b><br />
+      <input type="text" v-model="message" /><br /><br />
+      <div v-html="htmlString"></div>
+      <div>{{htmlString}}</div>
+      <br />
+
+      <!-- 이벤트 리스너를 이용해 메소드 호출 -->
+      <button @click="myFunc">console</button>&emsp;
+      <button @click="myChange1">hi</button>&emsp;
+      <button @click="myChange2">emoji</button>
+      <br />
+      <br />
+      <br />🍹
+      <hr />
+
+      <!-- 두 수 더하기 -->
+      <input type="text" size="5" v-model.number="su1" /> +
+      <input type="text" size="5" v-model.number="su2" /><br />
+      <span><b style="color: orange; font-size: 130%">{{su1 + su2}}</b></span>
+      <img v-bind:src="pompompurin" />
+    </div>
+
+    <br /><br />
+
+    <!-- 두 번째 인스턴스
+    SyntaxError: Identifier 'createApp' has already been declared
+    위 문제 해결 방법 : IIFE로 Vue 인스턴스를 감싸 줌으로써 식별자 충돌 문제 해결
+    -->
+    <div id="app2">
+      <select>
+        <option
+          v-for="(b, index) in busers"
+          :key="index"
+          v-bind:value="b.bunho"
+        >
+          {{b.irum}} {{b.junhwa}}
+        </option>
+      </select>
+      <br />
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>부서 번호</th>
+            <th>부서 이름</th>
+            <th>부서 전화</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(b, index) in busers" :key="index">
+            <td>{{b.bunho}}</td>
+            <td>{{b.irum}}</td>
+            <td>{{b.junhwa}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <span v-bind:style="cssStyleTest">ContentsStyleBinding</span><br />
+      <button @click="cssStyleTest.fontSize='20px'" style="font-size: 80%">
+        moreBigger
+      </button>
+    </div>
+    <br /><br />
+
+    <!-- 세 번째 인스턴스 -->
+    <div id="app3"></div>
+
+    <!-- 각 뷰 인스턴스를 JavaScript(js) 파일로 작성 후 연결 -->
+    <script src="ex08js01.js"></script>
+    <script src="ex08js02.js"></script>
+    <script src="ex08js03.js"></script>
+  </body>
+</html>

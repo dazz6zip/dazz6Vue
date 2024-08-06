@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex03.html</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <h2>빌트인 디렉티브</h2>
+    DOM 엘리먼트가 무언가를 수행하도록 지시하는 특수한 토큰
+    <dl>
+      <li>HTML 태그 안에 들어가는 속성 역할</li>
+      <li>v- 접두어 사용</li>
+    </dl>
+    <div id="app">
+      <a href="{{link}}">링크 (ERROR)</a><br />
+      <!-- diretive 사용 : 동적으로 href 속성 vue 인스턴스의 link 데이터 속성과 연결 -->
+      <a v-bind:href="link">링크</a><br />
+      <a :href="link">링크</a><br />
+      <img v-bind:src="imageSrc" alt="동적 이미지" />
+      <h2 v-text="say"></h2>
+      <h2>{{say}}</h2>
+      <h2 v-once="say">{{say}}</h2>
+      <h3>함수 호출 결과 : {{sayFunc()}}</h3>
+
+      <span v-text="aLinkNaver">innerTEXT</span><br />
+      <span v-html="aLinkNaver">innerHTML</span><br />
+
+      <!-- 양방향 데이터 바인딩 : v-model = v-bind + v-on -->
+      이름 : <input type="text" v-model="name" /> {{name}}<br />
+      이름 :
+      <input type="text" v-bind:value="name" v-on:input="changeName" />
+      {{name}}<br />
+      이름 :
+      <input type="text" :value="name" @input="changeName" /> {{name}}
+      <hr />
+      <!-- 계산된 프로퍼티 -->
+      a = {{a}}, b = {{b}}<br />
+      a값 입력 : <input type="text" v-model="a" /><br />
+      입력된 a : {{a}} (타입 : {{typeof a}})<br />
+      a값 입력 : <input type="text" v-model.number="a" />
+      <hr />
+      <h4>제어문</h4>
+      <b>조건판단문</b><br />
+      <div v-if="nai > 20">20살 초과</div>
+      <div v-else-if="nai === 20">20살</div>
+      <div v-else>20살 미만</div>
+      <br />
+      <b>반복문</b><br />
+      <ol>
+        <li v-for="t in todos" :key="index">{{t.msg}}</li>
+      </ol>
+      <ul>
+        <li v-for="(t, index) in todos" :key="index">
+          {{index + 1}}){{t.msg}}
+        </li>
+      </ul>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            // 단방향(일방향)
+            link: "https://cafe.daum.net/flowlife",
+            imageSrc: "image/pic1.png",
+            say: "aa",
+            aLinkNaver: "<a href='https://naver.com'>네이버로</a>",
+            name: "이름",
+            a: "1",
+            nai: 23,
+
+            todos: [{ msg: "🧸" }, { msg: "🧩" }, { msg: "📻" }],
+          };
+        },
+        methods: {
+          sayFunc() {
+            this.say = "bb";
+            return this.say;
+          },
+          changeName(e) {
+            this.name = e.target.value;
+          },
+        },
+        computed: {
+          // computed properties : 함수처럼 작동
+          // 계산된 프로퍼티가 의존하는 요소가 변경되면 반환
+          b() {
+            return this.a + 1;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex08EX.html</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+      table {
+        width: 50%;
+        text-align: center;
+      }
+      button {
+        border: none;
+        background-color: rgb(255, 0, 128);
+        color: white;
+        border-radius: 15px;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🍥 성적 관리</h2>
+    <div id="app">
+      <table>
+        <tbody>
+          <tr>
+            <td><b>Name</b></td>
+            <td><input type="text" v-model="name" /></td>
+          </tr>
+          <tr>
+            <td><b>JAVA</b></td>
+            <td><input type="text" v-model="jscore" /></td>
+          </tr>
+          <tr>
+            <td><b>React</b></td>
+            <td><input type="text" v-model="rscore" /></td>
+          </tr>
+          <tr>
+            <td><b>View</b></td>
+            <td><input type="text" v-model="vscore" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="result()">확인</button>
+      <hr />
+      <h2>🔗 입력 결과</h2>
+      <ul v-if="resultSave.length > 0">
+        <li v-for="(rs, index) in resultSave" :key="index">
+          {{rs.name}} : {{rs.jscore}}, {{rs.rscore}}, {{rs.vscore}} 총점 :
+          {{rs.allscore}}
+        </li>
+      </ul>
+      <ul v-else>
+        <li>입력값이 존재하지 않습니다.</li>
+      </ul>
+      <h2>🔗 전체 통계</h2>
+      <table>
+        <tbody>
+          <tr>
+            <td>인원수</td>
+            <td>{{allResultCount}}</td>
+          </tr>
+          <tr>
+            <td>전체 총점</td>
+            <td>{{allResultScore}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="ex08EX.js"></script>
+  </body>
+</html>
