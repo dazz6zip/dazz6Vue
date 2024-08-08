@@ -30,19 +30,19 @@
           </tr>
           <tr>
             <td><b>JAVA</b></td>
-            <td><input type="text" v-model="jscore" /></td>
+            <td><input type="text" v-model.Number="jscore" /></td>
           </tr>
           <tr>
             <td><b>React</b></td>
-            <td><input type="text" v-model="rscore" /></td>
+            <td><input type="text" v-model.Number="rscore" /></td>
           </tr>
           <tr>
             <td><b>View</b></td>
-            <td><input type="text" v-model="vscore" /></td>
+            <td><input type="text" v-model.Number="vscore" /></td>
           </tr>
         </tbody>
       </table>
-      <button @click="result()">확인</button>
+      <button @click="result">확인</button>
       <hr />
       <h2>🔗 입력 결과</h2>
       <ul v-if="resultSave.length > 0">
@@ -59,7 +59,7 @@
         <tbody>
           <tr>
             <td>인원수</td>
-            <td>{{allResultCount}}</td>
+            <td>{{resultSave.length}}</td>
           </tr>
           <tr>
             <td>전체 총점</td>

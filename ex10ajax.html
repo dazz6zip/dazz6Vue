@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex10ajax.html</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="fetchData">Ajax로 Json 자료 읽기</button><br />
+      <button @click="clearData">Json 자료 지우기</button>
+
+      <div v-for="(p, index) in posts" :key="index">
+        <h3>{{p.title}}</h3>
+        {{p.id}}<br />
+        {{p.body}}
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            posts: [],
+          };
+        },
+        methods: {
+          fetchData() {
+            fetch("https://jsonplaceholder.typicode.com/posts")
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("Ajax 오류");
+                }
+                return res.json();
+              })
+              .then((json) => {
+                this.posts = json.slice(0, 10);
+              })
+              .catch((e) => {
+                console.log("읽기 오류 : ", e);
+              });
+          },
+          clearData() {
+            this.posts = [];
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

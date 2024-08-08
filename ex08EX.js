@@ -9,25 +9,20 @@
         rscore: 0,
         vscore: 0,
         resultSave: [],
-        allResultCount: 0,
         allResultScore: 0,
       };
     },
     methods: {
       result() {
+        let as = this.jscore + this.rscore + this.vscore;
         this.resultSave.push({
           name: this.name,
           jscore: this.jscore,
           rscore: this.rscore,
           vscore: this.vscore,
-          allscore:
-            parseInt(this.jscore) +
-            parseInt(this.rscore) +
-            parseInt(this.vscore),
+          allscore: as,
         });
-        this.allResultCount++;
-        this.allResultScore +=
-          parseInt(this.jscore) + parseInt(this.rscore) + parseInt(this.vscore);
+        this.allResultScore += as;
       },
     },
   }).mount("#app");

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex11ajax_lib.html</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="fetchData">Ajax로 도서관 자료 읽기</button><br />
+      <button @click="clearData">Json 자료 지우기</button>
+
+      <div v-for="(l, index) in lib" :key="index">
+        <h3>{{l.LBRAY_NAME}}</h3>
+        주소 : {{l.ADRES}}<br />
+        전화 : {{l.TEL_NO}}
+        <hr />
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            lib: [],
+          };
+        },
+        methods: {
+          fetchData() {
+            fetch(
+              "https://raw.githubusercontent.com/pykwon/python/master/seoullibtime5.json"
+            )
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("Ajax 오류");
+                }
+                return res.json();
+              })
+              .then((json) => {
+                this.lib = json.SeoulLibraryTime.row;
+              })
+              .catch((e) => {
+                console.log("읽기 오류 : ", e);
+              });
+          },
+          clearData() {
+            this.lib = [];
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

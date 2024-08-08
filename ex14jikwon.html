@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex14jikwon.html</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="jikwonapp">
+      <button @click="showFunc">직원 자료 읽기 (Ajax)</button>
+      <table v-if="jikdatas.length > 0">
+        <tr>
+          <th>사번</th>
+          <th>이름</th>
+          <th>부서명</th>
+          <th>직급</th>
+        </tr>
+        <tr v-for="(j, index) in jikdatas" :key="index">
+          <td>{{j.no}}</td>
+          <td>{{j.name}}</td>
+          <td>{{j.bname}}</td>
+          <td>{{j.jik}}</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            jikdatas: [],
+          };
+        },
+        methods: {
+          showFunc() {
+            fetch("http://localhost/wDazz6React01/test.jsp")
+              .then((res) => {
+                if (res.ok) {
+                  return res.json();
+                }
+                throw new Error("Ajax 오류");
+              })
+              .then((data) => {
+                console.log(data.jikwon);
+                this.jikdatas = data.jikwon;
+              })
+              .catch((err) => {
+                console.log("ERROR : ", err);
+              });
+          },
+        },
+      }).mount("#jikwonapp");
+    </script>
+  </body>
+</html>

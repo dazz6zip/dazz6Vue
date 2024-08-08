@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vueEx/ex13weather.html</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="fetchWeather">Weather</button>
+      <div v-if="weather">
+        <h2>🎐 현재 날씨 정보</h2>
+        <p>예보 시간 : {{weather.time}} (iso8601)</p>
+        <p>온도 : {{weather.temperature}}℃</p>
+        <p>풍속 : {{weather.windspeed}}km/h</p>
+        <p>풍량 : {{weather.winddirection}}°</p>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        data() {
+          return {
+            weather: null,
+          };
+        },
+        methods: {
+          fetchWeather() {
+            fetch(
+              "https://api.open-meteo.com/v1/forecast?latitude=37.4988&longitude=127.0317&current_weather=true"
+            )
+              .then((res) => {
+                return res.json();
+              })
+              .then((data) => {
+                this.weather = data.current_weather;
+              })
+              .catch((err) => {
+                console.log("ERROR : ", err);
+              });
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
